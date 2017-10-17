@@ -1,19 +1,29 @@
 export default `
+  type Team {
+    owner: User!
+    members: [User!]!
+    channels: [Channel!]!
+  }
+
+  type Channel {
+    id: Int!
+    name: String!
+    public: Boolean!
+    messages: [Message!]!
+    users: [User!]!
+  }
+
+  type Message {
+    id: Int!
+    text: String!
+    user: User!
+    channel: Channel!
+  }
+
   type User {
     id: Int!
     username: String!
-    createdAt: String!
-    updatedAt: String!
+    email: String!
+    teams: [Team!]!
   }
-
-  type Query {
-    allUsers: [User!]!
-    getUser(username: String!): User
-  }
-
-  type Mutation {
-    createUser(username: String!): User
-    updateUser(username: String!, newUsername: String!): [Int!]!
-    deleteUser(username: String!): Int!
-  }
-`
+`;
