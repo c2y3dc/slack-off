@@ -1,21 +1,23 @@
 import Sequelize from 'sequelize';
 
-const sequelize = new Sequelize('test_graphql_db', 'test_graphql_admin', 'iamapassword', {
-  host: 'localhost',
-  dialect:'postgres'
+const sequelize = new Sequelize('slack', 'postgres', 'postgres', {
+  dialect: 'postgres',
 });
 
-const db = {
+const models = {
   User: sequelize.import('./user'),
+  Channel: sequelize.import('./channel'),
+  Message: sequelize.import('./message'),
+  Team: sequelize.import('./team'),
 };
 
-// Object.keys(db).forEach(function(modelName) {
-//   if ("associate" in db[modelName]) {
-//     db[modelName].associate(db);
-//   }
-// });
+Object.keys(models).forEach((modelName) => {
+  if ('associate' in models[modelName]) {
+    models[modelName].associate(models);
+  }
+});
 
-db.sequelize = sequelize;
-// db.Sequelize = Sequelize;
+models.sequelize = sequelize;
+models.Sequelize = Sequelize;
 
-export default db;
+export default models;
